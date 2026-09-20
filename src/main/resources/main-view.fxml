@@ -14,6 +14,13 @@
 
   <top>
     <VBox spacing="10" style="-fx-padding: 20 20 10 20;">
+
+      <HBox spacing="6" alignment="CENTER_LEFT">
+        <Button text="📚 Бібліотека" style="-fx-background-color: #3f7cd6; -fx-text-fill: white; -fx-background-radius: 6; -fx-padding: 6 14;"/>
+        <Button text="💱 Конвертер" onAction="#onOpenConverterClick" style="-fx-background-color: transparent; -fx-background-radius: 6; -fx-padding: 6 14;"/>
+        <Button text="⚙ Налаштування" onAction="#onOpenSettingsClick" style="-fx-background-color: transparent; -fx-background-radius: 6; -fx-padding: 6 14;"/>
+      </HBox>
+
       <HBox alignment="CENTER_LEFT" spacing="10">
         <Label text="🎵 Музичний редактор" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
         <Label fx:id="welcomeLabel" style="-fx-text-fill: gray;"/>
@@ -58,6 +65,10 @@
 
   <bottom>
     <HBox spacing="8" alignment="CENTER_RIGHT" style="-fx-padding: 10 20 20 20;">
+      <Button fx:id="playButton" text="▶ Відтворити" onAction="#onPlayClick"
+        style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-background-radius: 6; -fx-padding: 6 12;"/>
+      <Button text="⏹ Стоп" onAction="#onStopClick"
+        style="-fx-background-radius: 6; -fx-padding: 6 12;"/>
       <Button fx:id="editButton" text="Редагувати" onAction="#onEditClick"
         style="-fx-background-radius: 6; -fx-padding: 6 12;"/>
       <Button fx:id="deleteButton" text="Видалити" onAction="#onDeleteClick"

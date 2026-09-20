@@ -129,21 +129,38 @@ public class MainController {
   }
 
   @FXML
+  private void onOpenConverterClick() {
+    context.getPlayerService().stop();
+    navigator.switchScene("/converter-view.fxml", "Музичний редактор — Конвертер",
+        new ConverterController(context, navigator));
+  }
+
+  @FXML
+  private void onOpenSettingsClick() {
+    AlertHelper.showInfo("Сторінка налаштувань буде додана на наступному етапі.");
+  }
+
+  @FXML
   private void onPlayClick() {
     Track selected = tracksTable.getSelectionModel().getSelectedItem();
     if (selected == null) {
       AlertHelper.showError("Оберіть трек для відтворення");
       return;
     }
-    context.getPlayerService().play(selected.getFilePath(), totalDuration -> {
-      int seconds = (int) totalDuration.toSeconds();
-      if (seconds > 0 && selected.getDurationSeconds() == 0) {
-        javafx.application.Platform.runLater(() -> {
-          context.getLibraryService().updateDuration(selected.getId(), seconds);
-          refreshTable();
-        });
-      }
-    });
+    context.getPlayerService().play(
+        selected.getFilePath(),
+        totalDuration -> {
+          int seconds = (int) totalDuration.toSeconds();
+          if (seconds > 0 && selected.getDurationSeconds() == 0) {
+            javafx.application.Platform.runLater(() -> {
+              context.getLibraryService().updateDuration(selected.getId(), seconds);
+              refreshTable();
+            });
+          }
+        },
+        errorMessage -> javafx.application.Platform.runLater(() ->
+            AlertHelper.showError("Не вдалося відтворити файл: " + errorMessage))
+    );
   }
 
   @FXML

@@ -174,3 +174,28 @@ CREATE TABLE favorites (
         FOREIGN KEY (track_id) REFERENCES tracks(track_id)
         ON DELETE CASCADE
 );
+-- =========================================================
+-- conversion_orders — бізнес-сутність: замовлення платної послуги
+-- Зв'язки: N:1 з users, N:1 з tracks
+-- Нормальна форма: 3НФ (price фіксується на момент замовлення,
+-- а не береться "живим" з довідника — це свідоме рішення:
+-- історична ціна замовлення не повинна змінюватись заднім числом,
+-- навіть якщо тариф компанії зміниться в майбутньому)
+-- =========================================================
+CREATE TABLE conversion_orders (
+    order_id        INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id         INTEGER NOT NULL,
+    track_id        INTEGER NOT NULL,
+    target_format   VARCHAR(10) NOT NULL,
+    price           DECIMAL(6,2) NOT NULL,
+    status          VARCHAR(20) NOT NULL DEFAULT 'PENDING',
+    result_file_path VARCHAR(500),
+    created_date    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    completed_date  TIMESTAMP,
+    CONSTRAINT fk_orders_user
+        FOREIGN KEY (user_id) REFERENCES users(user_id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_orders_track
+        FOREIGN KEY (track_id) REFERENCES tracks(track_id)
+        ON DELETE CASCADE
+);

@@ -3,10 +3,7 @@ package com.perebziak.musiceditor.core;
 import com.perebziak.musiceditor.db.ConnectionPool;
 import com.perebziak.musiceditor.db.DatabaseManager;
 import com.perebziak.musiceditor.repository.*;
-import com.perebziak.musiceditor.service.AuthService;
-import com.perebziak.musiceditor.service.EmailService;
-import com.perebziak.musiceditor.service.LibraryService;
-import com.perebziak.musiceditor.service.PlayerService;
+import com.perebziak.musiceditor.service.*;
 import com.perebziak.musiceditor.util.AppConfig;
 import com.perebziak.musiceditor.util.AudioStorage;
 import com.perebziak.musiceditor.util.PasswordHasher;
@@ -30,6 +27,7 @@ public class AppContext {
   private final PlaylistRepository playlistRepository;
   private final UserRepository userRepository;
   private final VerificationCodeRepository verificationCodeRepository;
+  private final ConversionOrderRepository conversionOrderRepository;
 
   private final AppConfig appConfig;
   private final EmailService emailService;
@@ -43,6 +41,10 @@ public class AppContext {
   private final LibraryService libraryService;
   private final PlayerService playerService;
 
+  private final FfmpegService ffmpegService;
+  private final PaymentService paymentService;
+  private final ConversionService conversionService;
+
   private AppContext() {
     this.connectionPool = ConnectionPool.getInstance();
     this.databaseManager = new DatabaseManager(connectionPool);
@@ -55,6 +57,7 @@ public class AppContext {
     this.playlistRepository = new SqlitePlaylistRepository(connectionPool, trackRepository);
     this.userRepository = new SqliteUserRepository(connectionPool);
     this.verificationCodeRepository = new SqliteVerificationCodeRepository(connectionPool);
+    this.conversionOrderRepository = new SqliteConversionOrderRepository(connectionPool);
 
     this.appConfig = new AppConfig();
     this.emailService = new EmailService(appConfig);
@@ -68,8 +71,12 @@ public class AppContext {
 
     this.audioStorage = new AudioStorage();
     this.libraryService = new LibraryService(trackRepository, audioStorage);
-
     this.playerService = new PlayerService();
+
+    this.ffmpegService = new FfmpegService();
+    this.paymentService = new PaymentService();
+    this.conversionService = new ConversionService(
+        conversionOrderRepository, trackRepository, ffmpegService, paymentService);
   }
 
   public static synchronized AppContext getInstance() {
