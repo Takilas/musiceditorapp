@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" spacing="10" prefWidth="380" prefHeight="360"
+  style="-fx-background-color: #f4f6f8;"
+  xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
+  <padding>
+    <Insets top="35" right="35" bottom="35" left="35"/>
+  </padding>
+
+  <Label text="🎵" style="-fx-font-size: 36px;"/>
+  <Label text="Музичний редактор" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+  <Label text="Вхід до системи" style="-fx-font-size: 13px; -fx-text-fill: gray;"/>
+
+  <VBox spacing="10" style="-fx-padding: 15 0 0 0;">
+    <TextField fx:id="usernameField" promptText="Логін або email"
+      style="-fx-background-radius: 6; -fx-padding: 8;"/>
+    <PasswordField fx:id="passwordField" promptText="Пароль"
+      style="-fx-background-radius: 6; -fx-padding: 8;"/>
+
+    <Button text="Увійти" defaultButton="true" onAction="#onLoginClick" maxWidth="Infinity"
+      style="-fx-background-color: #3f7cd6; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-padding: 8;"/>
+    <Button text="Немає акаунту? Зареєструватися" onAction="#onGoToRegisterClick"
+      maxWidth="Infinity" style="-fx-background-color: transparent; -fx-text-fill: #2e6cbf;"/>
+  </VBox>
+
+  <Label fx:id="errorLabel" wrapText="true"/>
+</VBox>
