@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -33,8 +34,11 @@ public class MainController {
   @FXML private TableColumn<Track, Integer> durationColumn;
   @FXML private TableColumn<Track, String> addedDateColumn;
   @FXML private Button deleteButton;
-  @FXML private Button editButton;
   @FXML private Button playButton;
+
+  @FXML private Slider seekSlider;
+  @FXML private Label currentTimeLabel;
+  @FXML private Label totalTimeLabel;
 
   public MainController(AppContext context, SceneNavigator navigator) {
     this.context = context;
@@ -54,6 +58,27 @@ public class MainController {
     });
 
     refreshTable();
+    setupSeekBar();
+  }
+
+  private void setupSeekBar() {
+    context.getPlayerService().totalDurationProperty().addListener((obs, oldVal, newVal) ->
+        javafx.application.Platform.runLater(() -> {
+          seekSlider.setMax(newVal.toSeconds());
+          totalTimeLabel.setText(com.perebziak.musiceditor.util.TimeFormatUtil.format(newVal));
+        }));
+    context.getPlayerService().currentTimeProperty().addListener((obs, oldVal, newVal) ->
+        javafx.application.Platform.runLater(() -> {
+          if (!seekSlider.isValueChanging()) {
+            seekSlider.setValue(newVal.toSeconds());
+          }
+          currentTimeLabel.setText(com.perebziak.musiceditor.util.TimeFormatUtil.format(newVal));
+        }));
+    seekSlider.valueChangingProperty().addListener((obs, wasChanging, isChanging) -> {
+      if (!isChanging) {
+        context.getPlayerService().seek(javafx.util.Duration.seconds(seekSlider.getValue()));
+      }
+    });
   }
 
   private void refreshTable() {
@@ -124,8 +149,9 @@ public class MainController {
       AlertHelper.showError("Оберіть трек для редагування");
       return;
     }
-    // Реальна обробка звуку (обрізка/гучність/швидкість/тон) — наступний етап
-    AlertHelper.showInfo("Редактор звуку буде доданий на наступному етапі розробки.");
+    context.getPlayerService().stop();
+    navigator.switchScene("/track-edit-view.fxml", "Музичний редактор — Редагування",
+        new TrackEditController(context, navigator, selected));
   }
 
   @FXML

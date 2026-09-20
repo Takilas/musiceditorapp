@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public class LibraryService {
@@ -37,6 +38,14 @@ public class LibraryService {
       return getAllTracks();
     }
     return trackRepository.findByTitleContaining(query.trim());
+  }
+
+  public Optional<Track> getTrackById(Long id) {
+    return trackRepository.findById(id);
+  }
+
+  public List<Track> getEditedVersions(Long sourceTrackId) {
+    return trackRepository.findEditedVersions(sourceTrackId);
   }
 
   /**
