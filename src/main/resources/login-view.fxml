@@ -7,15 +7,14 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox alignment="CENTER" spacing="10" prefWidth="380" prefHeight="360"
-  style="-fx-background-color: #f4f6f8;"
   xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
   <padding>
     <Insets top="35" right="35" bottom="35" left="35"/>
   </padding>
 
   <Label text="🎵" style="-fx-font-size: 36px;"/>
-  <Label text="Музичний редактор" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
-  <Label text="Вхід до системи" style="-fx-font-size: 13px; -fx-text-fill: gray;"/>
+  <Label text="Музичний редактор" styleClass="page-title"/>
+  <Label text="Вхід до системи" styleClass="subtitle"/>
 
   <VBox spacing="10" style="-fx-padding: 15 0 0 0;">
     <TextField fx:id="usernameField" promptText="Логін або email"
@@ -26,7 +25,7 @@
     <Button text="Увійти" defaultButton="true" onAction="#onLoginClick" maxWidth="Infinity"
       style="-fx-background-color: #3f7cd6; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-padding: 8;"/>
     <Button text="Немає акаунту? Зареєструватися" onAction="#onGoToRegisterClick"
-      maxWidth="Infinity" style="-fx-background-color: transparent; -fx-text-fill: #2e6cbf;"/>
+      maxWidth="Infinity" styleClass="link-button"/>
   </VBox>
 
   <Label fx:id="errorLabel" wrapText="true"/>

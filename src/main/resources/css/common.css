@@ -1,0 +1,12 @@
+.page-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+.subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: gray;
+}
+.link-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #2e6cbf;
+}

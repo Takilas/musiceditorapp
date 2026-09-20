@@ -20,6 +20,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.util.List;
 import java.util.Optional;
 
 public class MainController {
@@ -35,7 +36,6 @@ public class MainController {
   @FXML private TableColumn<Track, String> addedDateColumn;
   @FXML private Button deleteButton;
   @FXML private Button playButton;
-
   @FXML private Slider seekSlider;
   @FXML private Label currentTimeLabel;
   @FXML private Label totalTimeLabel;
@@ -67,6 +67,7 @@ public class MainController {
           seekSlider.setMax(newVal.toSeconds());
           totalTimeLabel.setText(com.perebziak.musiceditor.util.TimeFormatUtil.format(newVal));
         }));
+
     context.getPlayerService().currentTimeProperty().addListener((obs, oldVal, newVal) ->
         javafx.application.Platform.runLater(() -> {
           if (!seekSlider.isValueChanging()) {
@@ -74,6 +75,7 @@ public class MainController {
           }
           currentTimeLabel.setText(com.perebziak.musiceditor.util.TimeFormatUtil.format(newVal));
         }));
+
     seekSlider.valueChangingProperty().addListener((obs, wasChanging, isChanging) -> {
       if (!isChanging) {
         context.getPlayerService().seek(javafx.util.Duration.seconds(seekSlider.getValue()));
@@ -82,12 +84,11 @@ public class MainController {
   }
 
   private void refreshTable() {
-    ObservableList<Track> tracks = FXCollections.observableArrayList(
-        context.getAuthService() != null ? loadTracks() : loadTracks());
+    ObservableList<Track> tracks = FXCollections.observableArrayList(loadTracks());
     tracksTable.setItems(tracks);
   }
 
-  private java.util.List<Track> loadTracks() {
+  private List<Track> loadTracks() {
     String query = searchField.getText();
     return context.getLibraryService().searchTracks(query);
   }
@@ -155,18 +156,6 @@ public class MainController {
   }
 
   @FXML
-  private void onOpenConverterClick() {
-    context.getPlayerService().stop();
-    navigator.switchScene("/converter-view.fxml", "Музичний редактор — Конвертер",
-        new ConverterController(context, navigator));
-  }
-
-  @FXML
-  private void onOpenSettingsClick() {
-    AlertHelper.showInfo("Сторінка налаштувань буде додана на наступному етапі.");
-  }
-
-  @FXML
   private void onPlayClick() {
     Track selected = tracksTable.getSelectionModel().getSelectedItem();
     if (selected == null) {
@@ -195,11 +184,17 @@ public class MainController {
   }
 
   @FXML
-  private void onLogoutClick() {
+  private void onOpenConverterClick() {
     context.getPlayerService().stop();
-    context.getSessionManager().logout();
-    navigator.switchScene("/login-view.fxml", "Музичний редактор — Вхід",
-        new LoginController(context, navigator));
+    navigator.switchScene("/converter-view.fxml", "Музичний редактор — Конвертер",
+        new ConverterController(context, navigator));
+  }
+
+  @FXML
+  private void onOpenSettingsClick() {
+    context.getPlayerService().stop();
+    navigator.switchScene("/settings-view.fxml", "Музичний редактор — Налаштування",
+        new SettingsController(context, navigator));
   }
 
   private String stripExtension(String fileName) {

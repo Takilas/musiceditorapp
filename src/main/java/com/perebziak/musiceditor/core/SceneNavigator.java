@@ -38,6 +38,7 @@ public class SceneNavigator {
       Parent root = loader.load();
 
       Scene scene = new Scene(root);
+      com.perebziak.musiceditor.util.ThemeManager.apply(scene);
       primaryStage.setScene(scene);
       primaryStage.setTitle(title);
       primaryStage.show();

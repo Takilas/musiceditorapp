@@ -5,25 +5,23 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox alignment="TOP_CENTER" spacing="14" prefWidth="480" prefHeight="520"
-  style="-fx-background-color: #f4f6f8;"
   xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
   <padding>
     <Insets top="25" right="35" bottom="25" left="35"/>
   </padding>
 
   <HBox alignment="CENTER_LEFT">
-    <Button text="← Назад" onAction="#onBackClick"
-      style="-fx-background-color: transparent; -fx-text-fill: #2e6cbf;"/>
+    <Button text="← Назад" onAction="#onBackClick" styleClass="link-button"/>
   </HBox>
 
-  <Label text="💱 Конвертер аудіо" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
-  <Label text="Платна послуга: конвертація в MP3, WAV або MP4" style="-fx-text-fill: gray; -fx-font-size: 12px;"/>
+  <Label text="💱 Конвертер аудіо" styleClass="page-title"/>
+  <Label text="Платна послуга: конвертація в MP3, WAV або MP4" styleClass="subtitle"/>
 
   <VBox spacing="8" style="-fx-padding: 10 0 0 0;">
-    <Label text="Трек:" style="-fx-font-weight: bold;"/>
+    <Label text="Трек:"/>
     <ChoiceBox fx:id="trackChoiceBox" maxWidth="Infinity"/>
 
-    <Label text="Цільовий формат:" style="-fx-font-weight: bold;"/>
+    <Label text="Цільовий формат:"/>
     <ChoiceBox fx:id="formatChoiceBox" maxWidth="Infinity"/>
 
     <Label fx:id="priceLabel" style="-fx-font-size: 14px; -fx-text-fill: #3f7cd6; -fx-font-weight: bold;"/>
@@ -32,7 +30,7 @@
   <Separator/>
 
   <VBox spacing="8">
-    <Label text="Дані картки" style="-fx-font-weight: bold;"/>
+    <Label text="Дані картки"/>
     <TextField fx:id="cardNumberField" promptText="Номер картки (16 цифр)"
       style="-fx-background-radius: 6; -fx-padding: 8;"/>
     <HBox spacing="8">

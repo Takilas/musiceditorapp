@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="TOP_CENTER" spacing="16" prefWidth="420" prefHeight="320"
+  xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
+  <padding>
+    <Insets top="25" right="35" bottom="25" left="35"/>
+  </padding>
+
+  <HBox alignment="CENTER_LEFT">
+    <Button text="← Назад до бібліотеки" onAction="#onBackClick" styleClass="link-button"/>
+  </HBox>
+
+  <Label text="⚙ Налаштування" styleClass="page-title"/>
+
+  <VBox spacing="8" style="-fx-padding: 10 0 0 0;">
+    <Label text="Тема оформлення:" style="-fx-font-weight: bold;"/>
+    <ChoiceBox fx:id="themeChoiceBox" maxWidth="Infinity"/>
+  </VBox>
+
+  <Separator/>
+
+  <Button text="Вийти з акаунту" onAction="#onLogoutClick" maxWidth="Infinity"
+    style="-fx-background-color: #c0392b; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-padding: 10;"/>
+</VBox>

@@ -7,14 +7,13 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox alignment="CENTER" spacing="10" prefWidth="400" prefHeight="460"
-  style="-fx-background-color: #f4f6f8;"
   xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
   <padding>
     <Insets top="30" right="35" bottom="30" left="35"/>
   </padding>
 
   <Label text="🎵" style="-fx-font-size: 32px;"/>
-  <Label text="Реєстрація" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+  <Label text="Реєстрація" styleClass="page-title"/>
 
   <VBox fx:id="registrationPane" spacing="10" alignment="CENTER" style="-fx-padding: 10 0 0 0;">
     <TextField fx:id="usernameField" promptText="Ім'я користувача"
@@ -30,7 +29,7 @@
 
   <VBox fx:id="verificationPane" spacing="10" alignment="CENTER" visible="false" managed="false"
     style="-fx-padding: 10 0 0 0;">
-    <Label fx:id="verificationInfoLabel" wrapText="true" style="-fx-text-fill: gray;"/>
+    <Label fx:id="verificationInfoLabel" wrapText="true" styleClass="subtitle"/>
     <TextField fx:id="codeField" promptText="Код з листа (6 цифр)"
       style="-fx-background-radius: 6; -fx-padding: 8;"/>
     <Button text="Підтвердити" defaultButton="true" onAction="#onVerifyClick" maxWidth="Infinity"
@@ -39,5 +38,5 @@
   </VBox>
 
   <Button text="Назад до входу" onAction="#onBackToLoginClick"
-    maxWidth="Infinity" style="-fx-background-color: transparent; -fx-text-fill: #2e6cbf;"/>
+    maxWidth="Infinity" styleClass="link-button"/>
 </VBox>

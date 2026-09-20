@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <!--  ЗМІНИ groupId на свій пакет, якщо він інший  -->
+
   <groupId>com.perebziak</groupId>
   <artifactId>musiceditor</artifactId>
   <version>1.0-SNAPSHOT</version>
@@ -10,7 +10,7 @@
     <maven.compiler.target>25</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <javafx.version>21.0.4</javafx.version>
-    <!--  ЗМІНИ на своє ім'я головного класу, якщо назвеш інакше  -->
+
     <main.class>com.perebziak.musiceditor.MainApp</main.class>
   </properties>
   <dependencies>
@@ -81,22 +81,23 @@
       <version>5.11.0</version>
       <scope>test</scope>
     </dependency>
+    <!-- ОНОВЛЕНО: Mockito до версії 5.19.0 -->
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
-      <version>5.14.1</version>
+      <version>5.19.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-junit-jupiter</artifactId>
-      <version>5.14.1</version>
+      <version>5.19.0</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
   <build>
     <plugins>
-      <!--  Компіляція під Java 21 + підключення Lombok annotation processor  -->
+      <!--  Компіляція під Java 21+ + підключення Lombok annotation processor  -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -121,11 +122,14 @@
           <mainClass>${main.class}</mainClass>
         </configuration>
       </plugin>
-      <!--  Юніт-тести: mvn test  -->
+      <!--  ОНОВЛЕНО: Юніт-тести з дозволом на підключення агентів для Java 25  -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.5.0</version>
+        <configuration>
+          <argLine>-XX:+EnableDynamicAgentLoading -Dnet.bytebuddy.experimental=true</argLine>
+        </configuration>
       </plugin>
     </plugins>
   </build>
